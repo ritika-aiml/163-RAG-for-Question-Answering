@@ -1,0 +1,5 @@
+.git/
+.ipynb_checkpoints/
+_build/
+.virtual_documents/
+.DS_Store/
