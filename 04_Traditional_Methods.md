@@ -126,9 +126,6 @@ Dense Passage Retrieval (DPR) - Learning semantic representations for neural inf
 Cross-Encoders vs Bi-Encoders - Understanding the trade-offs between accuracy and efficiency in neural ranking
 :::
 
-:::{admonition} Cross-Encoder Advantage in Reranking
-:class: tip
-
 **Cross-Encoder (BGE Reranker)**:
 - **Joint Processing**: Query and passage processed together through shared Transformer layers
 - **Full Attention**: Query tokens can attend to all passage tokens and vice versa
@@ -142,7 +139,6 @@ Cross-Encoders vs Bi-Encoders - Understanding the trade-offs between accuracy an
 - **Accuracy Trade-off**: Less precise due to lack of query-passage interaction
 
 **Why Cross-Encoder for Reranking**: After bi-encoder retrieval casts a wide net, cross-encoder reranking provides the accuracy boost needed for final passage selection in multihop reasoning tasks.
-:::
 
 **Language Model (Mistral-7B) - Reasoning and Synthesis**
 - **Purpose**: Perform the actual multihop reasoning and answer synthesis
@@ -287,15 +283,12 @@ Where $q \oplus p$ represents joint processing with full cross-attention capabil
 
 ### Primary Framework: HuggingFace + rank-bm25
 
-:::{admonition} Recommended Tech Stack
-:class: tip
 **Core Libraries:**
 - `transformers` - DPR models and Mistral-7B-Instruct
 - `rank-bm25` - BM25 implementation for sparse retrieval
 - `sentence-transformers` - BGE reranker model
 - `datasets` - HotpotQA dataset handling and preprocessing
 - `torch` - PyTorch backend for neural components
-:::
 
 ### Off-the-Shelf Components
 

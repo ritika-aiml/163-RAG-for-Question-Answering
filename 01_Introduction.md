@@ -3,19 +3,17 @@
 ```{tableofcontents}
 ```
 
-```{admonition} Project Overview
-:class: tip
 **Goal**: Implement and evaluate RAG (Retrieval-Augmented Generation) systems for multihop reasoning question answering, focusing on questions that require synthesizing information from multiple documents to arrive at correct answers.
 
 **Dataset**: [HotpotQA Dataset](https://hotpot.ai) - Large-scale dataset specifically designed for multihop reasoning over text
-**Focus**: Multihop reasoning challenges where answers require connecting information across multiple supporting documents
-```
 
-:::{iframe} https://www.youtube.com/embed/8DyJWWCG_l4
+**Focus**: Multihop reasoning challenges where answers require connecting information across multiple supporting documents
+
+:::{iframe} https://www.youtube.com/embed/T-D1OfcDW1M
 :width: 100%
 :align: center
 
-Understanding Multi-hop Question Answering - An introduction to multihop reasoning challenges in QA systems
+What is Retrieval-Augmented Generation (RAG)? - IBM Technology explains how RAG combines retrieval and generation for improved AI responses
 :::
 
 ---
@@ -28,11 +26,6 @@ Understanding Multi-hop Question Answering - An introduction to multihop reasoni
 ```
 
 Multihop reasoning represents one of the most challenging frontiers in question answering systems, where we tackle complex questions that cannot be answered by simply extracting information from a single document. Instead, these questions require sophisticated reasoning that connects information across multiple sources, performs logical inference, and synthesizes evidence to construct comprehensive answers.
-
-```{admonition} Core Concept Visualization  
-:class: tip
-**Input**: Complex Question + Multiple Documents → **Document Retrieval** → **Evidence Selection** → **Information Synthesis** → **Answer Generation**
-```
 
 The core challenge involves developing systems that can identify relevant documents, extract supporting evidence from multiple sources, and combine this information through logical reasoning to generate accurate answers. Unlike single-hop QA systems, multihop reasoning requires sophisticated orchestration of retrieval, evidence selection, and reasoning components working together seamlessly.
 
@@ -88,42 +81,6 @@ Assist analysts and executives in answering strategic questions that span multip
 ```{dropdown} Legal Research & Case Analysis
 Accelerate legal research by enabling queries that connect precedents, statutes, and case law across multiple jurisdictions and time periods. Attorneys can ask "What was the precedent cited by the judge who ruled on the similar case in the neighboring district?" requiring multidocument synthesis.
 ```
-
----
-
-## Machine Learning Architecture
-
-```{admonition} Processing Pipeline
-:class: info
-
-**Multihop Question** → Query Understanding & Entity Recognition → Retrieval System
-**Document Collection** → Passage Extraction & Semantic Indexing → Knowledge Base
-**Both** → Relevance Scoring → Evidence Aggregation → Multihop Reasoning → **Synthesized Answer**
-```
-
-Our approach explores multihop question answering through both foundational and state-of-the-art methodologies, each addressing different aspects of the complex reasoning and retrieval challenge:
-
-````{tab-set}
-```{tab-item} Traditional Sparse Methods
-**TF-IDF (Term Frequency-Inverse Document Frequency)** and **BM25 (Best Matching 25)** serve as established information retrieval baselines, leveraging statistical term weighting to match questions with relevant document passages. These methods excel at exact entity matching—crucial for bridge entity questions in multihop reasoning—and provide interpretable relevance scores that help trace reasoning chains.
-
-**Traditional Sparse Advantages**: Computational efficiency, transparency in matching decisions, strong performance on entity-centric queries, and no training data requirements for immediate deployment. Particularly effective for identifying passages containing bridge entities mentioned in questions.
-```
-
-```{tab-item} Learned Sparse Methods
-**SPLADE (Sparse Lexical and Expansion)** represents the modern evolution of sparse retrieval, using neural networks to learn which terms are important while maintaining the sparse representation paradigm. Unlike traditional methods, SPLADE can expand queries with semantically related terms while preserving interpretability through sparse vectors.
-
-**Learned Sparse Advantages**: Neural term weighting, automatic query expansion for synonyms and related concepts, semantic understanding within sparse framework, and interpretable results crucial for understanding multihop reasoning paths where explainability matters.
-```
-
-```{tab-item} Dense Neural Retrieval
-**Dense Passage Retrieval (DPR)** employs dual-encoder architectures with BERT-based question and passage encoders, creating dense vector representations that capture semantic similarity beyond lexical overlap. Dense methods represent questions and passages in continuous vector spaces, enabling semantic matching without requiring exact entity overlap—valuable for finding passages relevant to multihop reasoning even when they don't share obvious keywords.
-
-**Dense Advantages**: Semantic understanding beyond surface form, robust handling of paraphrases and related concepts, contextual relationship modeling crucial for multihop connections, and the ability to learn task-specific representations through fine-tuning on multihop QA datasets like HotpotQA.
-```
-
-
-````
 
 ---
 
@@ -186,117 +143,104 @@ Our analysis reveals key dataset properties that influence the effectiveness of 
 
 ---
 
-## Technical Methodology Comparison
+## Our RAG Pipeline Architecture
 
-Our systematic evaluation framework compares traditional and modern approaches across multiple dimensions relevant to domain-specific question answering:
+This project implements a complete RAG pipeline for HotpotQA multihop question answering, focusing on three core components:
 
 ````{grid} 3
-```{grid-item-card} Traditional Sparse Retrieval
-:class-header: bg-warning text-white
+```{grid-item-card} 1. Retrieval System
+:class-header: bg-primary text-white
 
-**TF-IDF & BM25 Approaches**
+**Vector Search + Reranking**
 ^^^
-- Statistical term frequency weighting
-- Exact lexical matching requirements
-- Fast retrieval suitable for large specialized corpora
-- Interpretable relevance scoring mechanisms
-- No training data requirements
-- Strong baseline for exact terminology queries
+- Dense retrieval with BGE embeddings
+- Cross-encoder reranking for precision
+- Top-k passage selection (k=8-12)
+- Handles multi-document evidence gathering
 ```
 
-```{grid-item-card} Learned Sparse Retrieval
-:class-header: bg-secondary text-white
+```{grid-item-card} 2. Generator Fine-tuning
+:class-header: bg-success text-white
 
-**SPLADE Architecture**
+**QLoRA for Mistral-7B**
 ^^^
-- Neural-learned term importance weighting
-- Automatic query and document expansion
-- Maintains sparse vector interpretability
-- Combines semantic understanding with sparsity
-- Requires training on domain-specific data
-- Better handling of synonyms within sparse paradigm
+- 4-bit quantization (NF4)
+- Low-rank adaptation (r=64)
+- Parameter-efficient fine-tuning
+- Trains answer generation + citation
 ```
 
-```{grid-item-card} Dense Neural Retrieval
+```{grid-item-card} 3. Training Strategy
 :class-header: bg-info text-white
 
-**DPR Architecture**  
+**Curriculum Learning**
 ^^^
-- Dense vector semantic similarity matching
-- Full contextual understanding capabilities
-- No explicit term overlap requirements
-- End-to-end optimization for retrieval tasks
-- Requires substantial training data
-- Black-box representations challenging interpretability
+- Synthetic reasoning generation
+- Progressive difficulty scaling
+- Explicit edge case handling
+- Insufficient context detection
 ```
 ````
 
-### Sparse vs. Dense Paradigms: A Conceptual Comparison
-
-The fundamental distinction between sparse and dense retrieval methods impacts their suitability for multihop reasoning applications:
+### Pipeline Stages
 
 ````{tab-set}
-```{tab-item} Sparse Retrieval Paradigm
-**Core Concept**: Represent documents and queries as sparse vectors where most dimensions are zero, with non-zero values indicating term presence/importance.
+```{tab-item} Stage 1: Retrieval
+**Goal**: Gather relevant passages from multiple documents
 
-**Traditional Sparse (TF-IDF, BM25)**:
-- Statistical term weighting based on corpus frequencies
-- Exact term matching with no semantic expansion
-- Fully interpretable: can see which terms drive relevance
+**Components**:
+- **Dense Retriever**: BGE-large embeddings for semantic search across Wikipedia passages
+- **Reranker**: Cross-encoder (BGE reranker) to score and refine top candidates
+- **Output**: Top 8-12 most relevant passages per question
 
-**Learned Sparse (SPLADE)**:
-- Neural networks learn optimal term weights and expansions
-- Can add semantically related terms to representations
-- Maintains interpretability through sparse vectors
-- Best of both worlds: semantic understanding + transparency
-
-**Multihop QA Benefits**: Strong entity matching for bridge questions, interpretable results for tracing reasoning chains, computational efficiency for large-scale retrieval across Wikipedia-sized corpora.
+**Why This Matters**: Multihop questions require evidence from multiple documents. Dense retrieval captures semantic similarity, while reranking ensures precision by comparing question-passage pairs directly.
 ```
 
-```{tab-item} Dense Retrieval Paradigm
-**Core Concept**: Represent documents and queries as dense vectors where every dimension contains meaningful information, enabling semantic similarity in continuous space.
+```{tab-item} Stage 2: Generation
+**Goal**: Generate concise answers with accurate citations
 
-**Dense Neural (DPR)**:
-- BERT-based encoders create rich contextual representations
-- Semantic similarity without requiring term overlap
-- Can understand complex relationships and paraphrases
-- Captures task-specific patterns through fine-tuning
+**Components**:
+- **Base Model**: Mistral-7B-Instruct (7B parameters)
+- **Quantization**: 4-bit NF4 quantization for memory efficiency
+- **Fine-tuning**: QLoRA adapters (rank=64) on HotpotQA training data
+- **Output Format**: Structured JSON with reasoning, answer, and citations
 
-**Multihop QA Benefits**: Robust handling of entity paraphrases, understanding of implicit relationships between passages, adaptation to reasoning patterns through fine-tuning on multihop datasets.
+**Why This Matters**: Base LLMs struggle with citation accuracy and edge case handling. Fine-tuning teaches the model to generate concise extractive answers and identify when context is insufficient.
+```
 
-**Multihop QA Challenges**: Black-box nature complicates reasoning chain analysis, requires substantial training data, computational overhead for exhaustive multi-document retrieval.
+```{tab-item} Stage 3: Training Strategy
+**Goal**: Maximize answer quality and reliability
+
+**Key Techniques**:
+1. **Synthetic Reasoning Generation**: Create training examples from gold supporting facts
+2. **Curriculum Learning**: Progressively increase retrieval difficulty (epochs 1-2: gold + distractors → epochs 3+: realistic retrieval)
+3. **Edge Case Training**: 15-20% "insufficient context" examples to prevent hallucination
+4. **Concise Chain-of-Thought**: Keep reasoning <100 tokens for training stability
+
+**Why This Matters**: Training data quality determines success. These strategies enable the model to learn robust citation patterns and admit uncertainty when appropriate.
 ```
 ````
 
-### Method Comparison Summary
+### Key Innovation: Fine-tuning Strategy
 
-```{list-table} Retrieval Method Characteristics Comparison
-:header-rows: 1
-:name: method-comparison
+Our approach focuses on **teaching the generator to handle multihop reasoning reliably** through careful training data design:
 
-* - Method
-  - Type
-  - Representation
-  - Matching Approach
-  - Interpretability
-* - **TF-IDF/BM25**
-  - Traditional Sparse
-  - Statistical weights
-  - Exact term overlap
-  - Full transparency
-* - **SPLADE**
-  - Learned Sparse
-  - Neural weights + expansion
-  - Terms + related concepts
-  - Sparse vector transparency
-* - **DPR**
-  - Dense Neural
-  - Continuous embeddings
-  - Semantic similarity
-  - Black-box representations
+```{admonition} Training Data Construction
+:class: important
+
+**Baseline Approach** (Prompting Only):
+- Zero-shot prompting with retrieval results
+- **Result**: 17.5% EM, 27.4% F1, 11.7% insufficient context detection
+
+**Our Approach** (QLoRA Fine-tuning):
+- 500 training examples with synthetic reasoning chains
+- Explicit citation training [1], [2] embedded in reasoning
+- Progressive curriculum from easy → realistic retrieval
+- Edge case examples for "insufficient context"
+- **Result**: 41.5% EM, 46.4% F1, 60.0% insufficient context detection
+
+**Key Insight**: Fine-tuning enables behaviors nearly impossible through prompting alone, especially admitting uncertainty when context is insufficient (+412.8% improvement).
 ```
-
-This comparison highlights why **SPLADE represents a crucial middle ground** for multihop reasoning applications: it provides the semantic understanding benefits of neural methods while maintaining the interpretability essential for analyzing reasoning chains and understanding why particular passages were retrieved.
 
 ### Evaluation Framework for Multihop QA
 
@@ -310,15 +254,15 @@ We establish comprehensive evaluation criteria specifically designed for multiho
 
 ---
 
-## Research Contributions
+## What You'll Learn
 
-This work advances the field of multihop question answering through:
+This tutorial demonstrates end-to-end RAG system development for multihop question answering:
 
-1. **Comprehensive RAG Pipeline**: Complete implementation from retrieval through generation with fine-tuning
-2. **Multihop Evaluation Framework**: 6-metric assessment covering answer quality, citation accuracy, and reliability
-3. **Baseline Comparisons**: Systematic evaluation of traditional vs. fine-tuned approaches on HotpotQA
-4. **Practical Insights**: Real-world lessons from training QLoRA models for multihop reasoning
-5. **Reproducible Methodology**: Open implementation applicable to other multihop reasoning tasks
+1. **Complete RAG Pipeline**: Dense retrieval (BGE embeddings) → Cross-encoder reranking → QLoRA-tuned generation
+2. **Fine-tuning Strategy**: Curriculum learning, synthetic reasoning generation, and edge case handling for reliable multihop QA
+3. **Comprehensive Evaluation**: 6-metric framework (Answer F1/EM, Citation Precision/Recall/F1, Insufficient Context Detection)
+4. **Practical Implementation**: Colab-friendly QLoRA training with 4-bit quantization for Mistral-7B on T4/A100 GPUs
+5. **Real Results**: Baseline (17.5% EM) → Fine-tuned (41.5% EM) with +412.8% improvement in edge case handling
 
 ---
 
@@ -329,10 +273,11 @@ This work advances the field of multihop question answering through:
 ```
 
 ```{seealso}
-Ready to explore our comprehensive multihop QA implementation? Navigate through our analysis pipeline:
-- **Dataset Analysis** - Deep dive into HotpotQA characteristics for multihop reasoning
-- **Traditional Methods** - BM25 baseline implementations with retrieval optimization
-- **Dense Retrieval** - DPR and reranking approaches for multihop evidence gathering
-- **Evaluation Framework** - Comprehensive QA assessment metrics including Answer F1 and EM
-- **Results Analysis** - Performance comparison and method selection guidance for RAG applications
+Ready to build your own multihop RAG system? Follow the tutorial sequence:
+- **Exploratory Data Analysis** - Understand HotpotQA structure, question types, and multihop patterns
+- **Evaluation Framework** - Implement 6 generation quality metrics for comprehensive RAG assessment
+- **Retrieval System** - Dense retrieval with BGE embeddings, cross-encoder reranking, and baseline evaluation
+- **Generator Fine-tuning** - QLoRA fine-tuning pipeline with curriculum learning and synthetic data generation
+- **Results Comparison** - Detailed analysis of baseline vs. fine-tuned performance across all metrics
+- **Conclusion** - Key learnings, failure analysis, and practical insights from development
 ```
