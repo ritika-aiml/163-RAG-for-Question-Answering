@@ -1,5 +1,8 @@
 # Evaluation Methods for HotpotQA Answer Generation Quality
 
+```{tableofcontents}
+```
+
 ## Overview
 
 Evaluating answer generation quality in HotpotQA multihop Question Answering systems requires specialized metrics that assess the correctness, factual grounding, and reliability of generated responses. This evaluation framework focuses on **generation quality**, measuring how well the model produces accurate answers with proper citation support.
@@ -9,6 +12,43 @@ Unlike retrieval evaluation (which measures document/passage selection), generat
 1. **Answer Correctness**: Is the generated answer accurate?
 2. **Citation Accuracy**: Are supporting citations correctly identified?
 3. **Edge Case Handling**: Does the model recognize insufficient context?
+
+## Two-Part Evaluation Framework
+
+RAG (Retrieval-Augmented Generation) systems require evaluation at **two distinct stages**:
+
+### Part 1: Retrieval Evaluation
+**Purpose**: Measure how effectively the system retrieves relevant documents and supporting facts.
+
+**Key Metrics**:
+- **Document Recall@k**: Percentage of gold documents found in top-k retrieved results
+- **Supporting-Fact F1**: Precision/recall of identifying specific supporting sentences
+- **Passage Ranking Quality**: How well relevant passages are ranked
+
+**What It Measures**: The retrieval component's ability to find and rank relevant evidence before generation.
+
+### Part 2: Generation Evaluation (This Document)
+**Purpose**: Measure how accurately the system generates answers and cites supporting evidence.
+
+**Key Metrics** (detailed below):
+- Answer F1 & Exact Match
+- Citation Precision, Recall, & F1
+- Insufficient Context Detection Rate
+
+**What It Measures**: The generation component's ability to synthesize retrieved information into correct answers with proper citations.
+
+### Why Both Are Needed
+
+A RAG system can fail in two ways:
+1. **Retrieval failure**: Wrong documents retrieved → Generator has no chance to succeed
+2. **Generation failure**: Correct documents retrieved → Generator fails to synthesize or cite correctly
+
+**Example Scenario**:
+- **High retrieval, low generation**: System finds right passages but generates wrong answer
+- **Low retrieval, high generation**: System would generate correctly *if* it had the right passages
+- **Goal**: Both components must perform well for end-to-end success
+
+This document focuses on **Part 2 (Generation Evaluation)**. For retrieval metrics, see the retrieval evaluation section in traditional methods.
 
 ## HotpotQA Generation Quality Metrics
 
@@ -327,3 +367,20 @@ Generation quality evaluation requires both answer correctness (F1/EM) and citat
 - Metrics: Document Recall@k, Supporting-Fact F1
 
 Both are essential for complete RAG system evaluation but measure different pipeline stages.
+
+---
+
+## References
+
+```{admonition} Academic Citations
+:class: note
+
+**F1 and Exact Match Metrics**:
+- Rajpurkar, P., Zhang, J., Lopyrev, K., & Liang, P. (2016). *SQuAD: 100,000+ Questions for Machine Comprehension of Text*. Proceedings of the 2016 Conference on Empirical Methods in Natural Language Processing (EMNLP), pages 2383–2392.
+
+**HotpotQA Dataset and Evaluation**:
+- Yang, Z., Qi, P., Zhang, S., Bengio, Y., Cohen, W. W., Salakhutdinov, R., & Manning, C. D. (2018). *HotpotQA: A Dataset for Diverse, Explainable Multi-hop Question Answering*. Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing (EMNLP), pages 2369–2380.
+
+**Retrieval-Augmented Generation**:
+- Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttler, H., Lewis, M., Yih, W., Rocktäschel, T., Riedel, S., & Kiela, D. (2020). *Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*. Advances in Neural Information Processing Systems (NeurIPS) 33, pages 9459–9474.
+```

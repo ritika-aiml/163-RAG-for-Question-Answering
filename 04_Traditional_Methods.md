@@ -3,6 +3,13 @@
 ```{tableofcontents}
 ```
 
+:::{iframe} https://www.youtube.com/embed/a3sg6MH8m4k
+:width: 100%
+:align: center
+
+BM25 Algorithm Explained - Understanding the Best Matching 25 ranking function for information retrieval
+:::
+
 ## Table of Contents
 
 ### 4.1 Traditional IR Algorithms Selection
@@ -84,19 +91,26 @@ The pipeline design specifically addresses the core challenges of multihop reaso
 
 **Why Each Component is Essential:**
 
-**🔍 Sparse Retrieval (BM25) - Entity Matching Foundation**
+**Sparse Retrieval (BM25) - Entity Matching Foundation**
 - **Purpose**: Find passages containing entities mentioned in the question
 - **HotpotQA Strength**: Excels at bridge entity questions where specific entities must be found
 - **Example**: For "Which magazine was started first, Arthur's Magazine or First for Women?", BM25 ensures passages about both magazines are retrieved
 - **Efficiency**: Handles millions of Wikipedia passages with millisecond response time
 
-**🧠 Dense Retrieval (DPR) - Semantic Understanding**
+:::{iframe} https://www.youtube.com/embed/iMqqY-_j0ao
+:width: 100%
+:align: center
+
+Dense Passage Retrieval (DPR) - Learning semantic representations for neural information retrieval
+:::
+
+**Dense Retrieval (DPR) - Semantic Understanding**
 - **Purpose**: Capture semantic relationships beyond exact keyword matching
 - **HotpotQA Strength**: Finds passages related to question intent even without exact entity overlap
 - **Example**: Can find passages about publication dates and founding information even if phrased differently
 - **Complementarity**: Works with BM25 to create comprehensive candidate set
 
-**⚡ Reader/Reranker (BGE) - Intelligent Passage Selection via Cross-Encoder**
+**Reader/Reranker (BGE) - Intelligent Passage Selection via Cross-Encoder**
 - **Purpose**: Identify which passages actually contain information needed for multihop reasoning
 - **Cross-Encoder Architecture**: Uses BAAI/bge-reranker-base cross-encoder for joint query-passage attention
 - **HotpotQA Strength**: Understands query-passage relevance at a deeper level than simple similarity
@@ -104,6 +118,13 @@ The pipeline design specifically addresses the core challenges of multihop reaso
 - **Efficiency**: Reduces 100+ candidates to 10 most promising passages for reasoning
 
 **Cross-Encoder vs Bi-Encoder for Reranking:**
+
+:::{iframe} https://www.youtube.com/embed/OATCgQtNX2o
+:width: 100%
+:align: center
+
+Cross-Encoders vs Bi-Encoders - Understanding the trade-offs between accuracy and efficiency in neural ranking
+:::
 
 :::{admonition} Cross-Encoder Advantage in Reranking
 :class: tip
@@ -123,7 +144,7 @@ The pipeline design specifically addresses the core challenges of multihop reaso
 **Why Cross-Encoder for Reranking**: After bi-encoder retrieval casts a wide net, cross-encoder reranking provides the accuracy boost needed for final passage selection in multihop reasoning tasks.
 :::
 
-**🎯 Language Model (Mistral-7B) - Reasoning and Synthesis**
+**Language Model (Mistral-7B) - Reasoning and Synthesis**
 - **Purpose**: Perform the actual multihop reasoning and answer synthesis
 - **HotpotQA Strength**: Can connect information across multiple passages to derive answers
 - **No Fine-tuning**: Uses pre-trained instruction-following capabilities to handle complex reasoning

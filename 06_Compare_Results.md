@@ -100,27 +100,30 @@ def process_hotpotqa_for_training(examples):
 
 ### Overall Results
 
-```
-================================================================================
-📊 BASELINE vs FINE-TUNED MODEL COMPARISON
-================================================================================
+````{grid} 1
+```{grid-item-card} Performance Comparison: Baseline vs Fine-Tuned
+:class-header: bg-primary text-white
 
-                        Metric | Baseline (RAG) | Fine-tuned (QLoRA) | Δ (Absolute) |   Δ (%)
-─────────────────────────────────────────────────────────────────────────────────────────────
-              Exact Match (EM) |          0.175 |              0.415 |       +0.240 | +137.1%
-                      F1 Score |          0.274 |              0.464 |       +0.190 |  +69.3%
-            Citation Precision |          0.458 |              0.575 |       +0.117 |  +25.5%
-               Citation Recall |          0.703 |              0.750 |       +0.047 |   +6.7%
-                   Citation F1 |          0.402 |              0.575 |       +0.173 |  +43.0%
-Insufficient Context Detection |          0.117 |              0.600 |       +0.483 | +412.8%
-─────────────────────────────────────────────────────────────────────────────────────────────
-                Average Metric |          0.355 |              0.563 |       +0.208 | +115.8%
-================================================================================
-```
+| Metric | Baseline (RAG) | Fine-tuned (QLoRA) | Absolute Change | Relative Change |
+|--------|----------------|-------------------|----------------|-----------------|
+| **Exact Match (EM)** | 0.175 | 0.415 | +0.240 | **+137.1%** |
+| **F1 Score** | 0.274 | 0.464 | +0.190 | **+69.3%** |
+| **Citation Precision** | 0.458 | 0.575 | +0.117 | **+25.5%** |
+| **Citation Recall** | 0.703 | 0.750 | +0.047 | **+6.7%** |
+| **Citation F1** | 0.402 | 0.575 | +0.173 | **+43.0%** |
+| **Insufficient Context Detection** | 0.117 | 0.600 | +0.483 | **+412.8%** |
+| **Average Metric** | 0.355 | 0.563 | +0.208 | **+115.8%** |
+
+**Key Highlights**:
+- Largest improvement: Insufficient Context Detection (+412.8%)
+- Average improvement across all metrics: +115.8%
+- Consistent gains across all 6 evaluation dimensions
 
 **Dataset Sizes**:
 - Baseline: 100 evaluation examples
 - Fine-tuned: 200 evaluation examples (larger, more challenging test set)
+```
+````
 
 ### Metric-by-Metric Analysis
 

@@ -1,5 +1,8 @@
 # Introduction: Multihop Reasoning for Question Answering
 
+```{tableofcontents}
+```
+
 ```{admonition} Project Overview
 :class: tip
 **Goal**: Implement and evaluate RAG (Retrieval-Augmented Generation) systems for multihop reasoning question answering, focusing on questions that require synthesizing information from multiple documents to arrive at correct answers.
@@ -8,9 +11,16 @@
 **Focus**: Multihop reasoning challenges where answers require connecting information across multiple supporting documents
 ```
 
+:::{iframe} https://www.youtube.com/embed/8DyJWWCG_l4
+:width: 100%
+:align: center
+
+Understanding Multi-hop Question Answering - An introduction to multihop reasoning challenges in QA systems
+:::
+
 ---
 
-## 🧠 The Multihop Reasoning Challenge
+## The Multihop Reasoning Challenge
 
 ```{admonition} What is Multihop Reasoning?
 :class: note
@@ -28,88 +38,88 @@ The core challenge involves developing systems that can identify relevant docume
 
 ---
 
-## 🌟 Why This Matters
+## Why This Matters
 
 ````{grid} 2
 ```{grid-item-card} Technical Innovation
 :class-header: bg-primary text-white
 
-- Advances domain-specific information retrieval architectures
-- Develops specialized retrieval evaluation metrics for expert domains  
-- Pushes boundaries of evidence-based AI systems
+- Advances complex reasoning capabilities in AI systems
+- Develops evaluation metrics for multi-document understanding
+- Pushes boundaries of information synthesis from multiple sources
 ```
 
-```{grid-item-card} Domain Impact
+```{grid-item-card} Real-World Impact
 :class-header: bg-success text-white
 
-- Accelerates scientific research discovery and synthesis
-- Supports real-time expert decision making
-- Democratizes access to specialized domain knowledge
-- Enables rapid response to emerging domain challenges
+- Accelerates research and knowledge discovery
+- Improves fact-checking and verification systems
+- Enhances educational and decision support tools
+- Enables more sophisticated information access
 ```
 ````
 
-From a technical perspective, medical domain question answering represents one of the most challenging applications for information retrieval systems. The field demands specialized approaches that can handle scientific nomenclature, process contradictory research findings across different time periods, and navigate the intricate relationships between domain concepts. The challenge pushes the boundaries of current retrieval architectures, requiring novel approaches to balance precision with recall while maintaining interpretability for domain experts.
+From a technical perspective, multihop reasoning for question answering represents one of the most challenging frontiers in natural language understanding. Unlike simpler QA tasks where answers can be extracted from single passages, multihop questions require systems to identify relevant information scattered across multiple documents, establish connections between disparate facts, and synthesize these connections to construct accurate answers. This challenge pushes the boundaries of current retrieval and reasoning architectures, requiring sophisticated approaches that can handle complex information flow across document boundaries.
 
 ```{note}
-The ability to automatically retrieve accurate medical information could revolutionize healthcare accessibility globally, making sophisticated evidence-based domain knowledge available to professionals, researchers, and decision makers during critical moments across various medical specialties.
+Mastering multihop reasoning capabilities opens doors to practical applications across diverse domains—from research assistance and fact-checking to educational systems and decision support tools. Systems that can reliably answer complex questions requiring synthesis of multiple sources represent a significant step toward truly intelligent information retrieval.
 ```
 
 ---
 
-## 🚀 Real-World Applications
+## Real-World Applications
 
-```{dropdown} 🏥 Clinical Decision Support Systems
-Assist healthcare professionals across medical specialties with rapid access to latest research findings, treatment protocols, diagnostic criteria, and adverse event reports during direct patient care decisions, enabling evidence-based medicine at the point of care.
+```{dropdown} Research Assistance & Literature Review
+Enable researchers across domains to quickly identify connections between disparate studies, discover related work that spans multiple sub-fields, and synthesize knowledge from comprehensive literature searches. Multihop QA systems can answer complex questions like "What methodology did the team that discovered X use in their follow-up study?" requiring connections across multiple papers.
 ```
 
-```{dropdown} 🔬 Medical Research Acceleration  
-Enable biomedical researchers to quickly identify relevant prior work across medical domains, discover contradictory findings, identify research gaps, and synthesize knowledge across rapidly expanding specialized literature for hypothesis generation and study design.
+```{dropdown} Fact-Checking & Verification
+Support journalists, fact-checkers, and content moderators by answering complex verification questions that require cross-referencing multiple sources. For example, "Did the politician who voted against Bill A also serve on the committee that drafted it?" requires reasoning across voting records and committee membership data.
 ```
 
-```{dropdown} 📚 Medical Education & Professional Training
-Provide medical students, residents, and healthcare workers with instant access to evidence-based answers about pathophysiology, symptoms, diagnostic approaches, treatment modalities, and prevention measures across various medical specialties for continuous learning.
+```{dropdown} Educational & Learning Systems
+Provide students and educators with intelligent tutoring systems capable of answering sophisticated questions that require synthesizing information from multiple textbook chapters, lecture materials, or knowledge sources. Questions like "How does the concept introduced in Chapter 3 relate to the theorem proved in Chapter 7?" demand multihop reasoning.
 ```
 
-```{dropdown} 🌍 Public Health Policy & Guidelines
-Support policy makers, health authorities, and regulatory agencies with rapid synthesis of medical evidence for health response strategies, treatment guidelines, public health recommendations, and regulatory decision-making across different medical domains.
+```{dropdown} Business Intelligence & Decision Support
+Assist analysts and executives in answering strategic questions that span multiple data sources and reports. Questions such as "Which product line managed by the VP who joined last year had the highest growth?" require connecting organizational, product, and performance data across multiple documents.
 ```
 
-```{dropdown} 🔍 Systematic Review & Meta-Analysis Support
-Accelerate systematic review processes by automatically identifying relevant studies across medical specialties, extracting key findings, and supporting evidence synthesis for clinical practice guidelines and evidence-based medicine initiatives.
+```{dropdown} Legal Research & Case Analysis
+Accelerate legal research by enabling queries that connect precedents, statutes, and case law across multiple jurisdictions and time periods. Attorneys can ask "What was the precedent cited by the judge who ruled on the similar case in the neighboring district?" requiring multidocument synthesis.
 ```
 
 ---
 
-## 🧠 Machine Learning Architecture
+## Machine Learning Architecture
 
 ```{admonition} Processing Pipeline
 :class: info
 
-**Domain Question** → Query Analysis & Medical NER → Retrieval System  
-**Scientific Literature** → Document Processing & Domain Indexing → Knowledge Base  
-**Both** → Relevance Scoring → Passage Ranking → **Evidence-Based Domain Answer**
+**Multihop Question** → Query Understanding & Entity Recognition → Retrieval System
+**Document Collection** → Passage Extraction & Semantic Indexing → Knowledge Base
+**Both** → Relevance Scoring → Evidence Aggregation → Multihop Reasoning → **Synthesized Answer**
 ```
 
-Our approach explores medical domain question answering through both foundational and state-of-the-art methodologies, each addressing different aspects of the domain-specific information retrieval challenge:
+Our approach explores multihop question answering through both foundational and state-of-the-art methodologies, each addressing different aspects of the complex reasoning and retrieval challenge:
 
 ````{tab-set}
-```{tab-item} �� Traditional Sparse Methods
-**TF-IDF (Term Frequency-Inverse Document Frequency)** and **BM25 (Best Matching 25)** serve as established information retrieval baselines, leveraging statistical term weighting to match questions with relevant document passages. These methods excel at exact terminology matching—crucial for medical accuracy—and provide interpretable relevance scores essential for domain applications.
+```{tab-item} Traditional Sparse Methods
+**TF-IDF (Term Frequency-Inverse Document Frequency)** and **BM25 (Best Matching 25)** serve as established information retrieval baselines, leveraging statistical term weighting to match questions with relevant document passages. These methods excel at exact entity matching—crucial for bridge entity questions in multihop reasoning—and provide interpretable relevance scores that help trace reasoning chains.
 
-**Traditional Sparse Advantages**: Computational efficiency, transparency in matching decisions, strong performance on specialized terminology, and no training data requirements for immediate deployment across new medical domains.
+**Traditional Sparse Advantages**: Computational efficiency, transparency in matching decisions, strong performance on entity-centric queries, and no training data requirements for immediate deployment. Particularly effective for identifying passages containing bridge entities mentioned in questions.
 ```
 
-```{tab-item} 🧠 Learned Sparse Methods
+```{tab-item} Learned Sparse Methods
 **SPLADE (Sparse Lexical and Expansion)** represents the modern evolution of sparse retrieval, using neural networks to learn which terms are important while maintaining the sparse representation paradigm. Unlike traditional methods, SPLADE can expand queries with semantically related terms while preserving interpretability through sparse vectors.
 
-**Learned Sparse Advantages**: Neural term weighting, automatic query expansion, semantic understanding within sparse framework, and interpretable results crucial for medical applications where decision transparency is essential.
+**Learned Sparse Advantages**: Neural term weighting, automatic query expansion for synonyms and related concepts, semantic understanding within sparse framework, and interpretable results crucial for understanding multihop reasoning paths where explainability matters.
 ```
 
-```{tab-item} ⚡ Dense Neural Retrieval
-**Dense Passage Retrieval (DPR)** employs dual-encoder architectures with BERT-based question and passage encoders, creating dense vector representations that capture semantic similarity beyond lexical overlap. Dense methods represent questions and passages in continuous vector spaces, enabling semantic matching without explicit term overlap.
+```{tab-item} Dense Neural Retrieval
+**Dense Passage Retrieval (DPR)** employs dual-encoder architectures with BERT-based question and passage encoders, creating dense vector representations that capture semantic similarity beyond lexical overlap. Dense methods represent questions and passages in continuous vector spaces, enabling semantic matching without requiring exact entity overlap—valuable for finding passages relevant to multihop reasoning even when they don't share obvious keywords.
 
-**Dense Advantages**: Semantic understanding of medical concepts, robust handling of synonyms and paraphrases, contextual relationship modeling, and adaptation to domain-specific terminology through fine-tuning on specialized medical literature.
+**Dense Advantages**: Semantic understanding beyond surface form, robust handling of paraphrases and related concepts, contextual relationship modeling crucial for multihop connections, and the ability to learn task-specific representations through fine-tuning on multihop QA datasets like HotpotQA.
 ```
 
 
@@ -117,66 +127,66 @@ Our approach explores medical domain question answering through both foundationa
 
 ---
 
-## 📊 The COVID-QA Dataset: A Medical Domain Case Study
+## The HotpotQA Dataset: A Multihop Reasoning Case Study
 
 ````{grid} 1 2 2 3
 :gutter: 3
 
-```{grid-item-card} 📖 Scale & Coverage
+```{grid-item-card} Scale & Coverage
 :class-header: bg-primary text-white
 
-- **2,019** question-answer pairs
-- **Scientific literature** sources  
-- **Expert-curated** annotations
-- **Peer-reviewed** paper grounding
+- **~90,000** training examples
+- **~7,400** validation examples
+- **Wikipedia** as knowledge source
+- **Crowdsourced** annotations
 ```
 
-```{grid-item-card} 🔬 Medical Domains
+```{grid-item-card} Question Types
 :class-header: bg-secondary text-white
 
-- Epidemiology & Disease Transmission
-- Clinical Symptoms & Diagnostic Criteria  
-- Treatment Protocols & Therapeutics
-- Prevention Measures & Public Health
+- Bridge Entity Questions (~80%)
+- Comparison Questions (~20%)
+- Multi-document Synthesis
+- Complex Reasoning Chains
 ```
 
-```{grid-item-card} 🎯 Question Types
+```{grid-item-card} Reasoning Patterns
 :class-header: bg-success text-white
 
-- Factual medical information
-- Causal relationship queries
-- Comparative effectiveness questions
-- Temporal progression inquiries
+- Entity relationship queries
+- Temporal comparison questions
+- Attribute-based comparisons
+- Multi-step inference requirements
 ```
 
-```{grid-item-card} 📈 Domain Characteristics
+```{grid-item-card} Dataset Characteristics
 :class-header: bg-info text-white
 
-- Real expert information needs
-- Multi-paragraph answer complexity
-- Evidence citation requirements  
-- High medical terminology density
+- Genuine multihop requirements
+- Supporting facts annotations
+- Distractor paragraphs included
+- Diverse Wikipedia topics
 ```
 ````
 
-```{admonition} COVID-QA as Medical Domain Representative
+```{admonition} HotpotQA as Multihop Reasoning Benchmark
 :class: important
 
-The COVID-QA dataset serves as an excellent case study for medical domain question answering, featuring real-world medical questions that emerged during the pandemic with answers carefully grounded in peer-reviewed scientific literature. As a representative medical domain dataset, it exhibits key characteristics found across medical specialties: technical terminology, evolving knowledge, evidence requirements, and expert-level information needs.
+The HotpotQA dataset serves as the premier benchmark for multihop question answering, specifically designed to test systems' ability to reason across multiple documents. Unlike simpler QA datasets where answers can be found in single passages, HotpotQA requires synthesizing information from multiple Wikipedia articles, with explicit annotations of supporting facts that enable both answer generation and reasoning path evaluation.
 ```
 
 ### Dataset Characteristics Impacting Method Selection
 
-Our analysis reveals key dataset properties that influence the effectiveness of different retrieval approaches across medical domains:
+Our analysis reveals key dataset properties that influence the effectiveness of different retrieval approaches for multihop reasoning:
 
-- **High Medical Terminology Density**: 15.2% of vocabulary consists of medical terms, typical of specialized domains
-- **Complex Multi-Sentence Answers**: Average answer length of 3.4 sentences requires passage-level retrieval common in domain QA
-- **Evolving Terminology**: Domain-specific terms and concepts change over time as knowledge advances
-- **Evidence Requirements**: Answers must be traceable to specific research publications, crucial for medical applications
+- **Multihop Requirement**: 95%+ questions require evidence from 2 or more distinct Wikipedia articles
+- **Bridge Entity Complexity**: Most questions involve intermediate entities that connect the question to the final answer
+- **Distractor Challenge**: 80% of provided context consists of plausible but irrelevant passages, testing retrieval robustness
+- **Evidence Requirements**: Answers must be traceable to specific supporting facts, enabling evaluation of reasoning transparency
 
 ---
 
-## 🔬 Technical Methodology Comparison
+## Technical Methodology Comparison
 
 Our systematic evaluation framework compares traditional and modern approaches across multiple dimensions relevant to domain-specific question answering:
 
@@ -223,10 +233,10 @@ Our systematic evaluation framework compares traditional and modern approaches a
 
 ### Sparse vs. Dense Paradigms: A Conceptual Comparison
 
-The fundamental distinction between sparse and dense retrieval methods impacts their suitability for medical domain applications:
+The fundamental distinction between sparse and dense retrieval methods impacts their suitability for multihop reasoning applications:
 
 ````{tab-set}
-```{tab-item} 🔍 Sparse Retrieval Paradigm
+```{tab-item} Sparse Retrieval Paradigm
 **Core Concept**: Represent documents and queries as sparse vectors where most dimensions are zero, with non-zero values indicating term presence/importance.
 
 **Traditional Sparse (TF-IDF, BM25)**:
@@ -240,21 +250,21 @@ The fundamental distinction between sparse and dense retrieval methods impacts t
 - Maintains interpretability through sparse vectors
 - Best of both worlds: semantic understanding + transparency
 
-**Medical Domain Benefits**: Critical terminology preservation, interpretable results for expert validation, computational efficiency for large literature corpora.
+**Multihop QA Benefits**: Strong entity matching for bridge questions, interpretable results for tracing reasoning chains, computational efficiency for large-scale retrieval across Wikipedia-sized corpora.
 ```
 
-```{tab-item} 🌐 Dense Retrieval Paradigm
+```{tab-item} Dense Retrieval Paradigm
 **Core Concept**: Represent documents and queries as dense vectors where every dimension contains meaningful information, enabling semantic similarity in continuous space.
 
 **Dense Neural (DPR)**:
 - BERT-based encoders create rich contextual representations
 - Semantic similarity without requiring term overlap
 - Can understand complex relationships and paraphrases
-- Captures domain knowledge through fine-tuning
+- Captures task-specific patterns through fine-tuning
 
-**Medical Domain Benefits**: Robust handling of medical synonyms, understanding of complex medical relationships, adaptation to evolving terminology through retraining.
+**Multihop QA Benefits**: Robust handling of entity paraphrases, understanding of implicit relationships between passages, adaptation to reasoning patterns through fine-tuning on multihop datasets.
 
-**Medical Domain Challenges**: Black-box nature complicates error analysis, requires large training datasets, computational overhead for real-time applications.
+**Multihop QA Challenges**: Black-box nature complicates reasoning chain analysis, requires substantial training data, computational overhead for exhaustive multi-document retrieval.
 ```
 ````
 
@@ -286,42 +296,43 @@ The fundamental distinction between sparse and dense retrieval methods impacts t
   - Black-box representations
 ```
 
-This comparison highlights why **SPLADE represents a crucial middle ground** for medical domain applications: it provides the semantic understanding benefits of neural methods while maintaining the interpretability essential for expert validation in medical contexts.
+This comparison highlights why **SPLADE represents a crucial middle ground** for multihop reasoning applications: it provides the semantic understanding benefits of neural methods while maintaining the interpretability essential for analyzing reasoning chains and understanding why particular passages were retrieved.
 
-### Evaluation Framework for Domain QA
+### Evaluation Framework for Multihop QA
 
-We establish comprehensive evaluation criteria specifically adapted for medical domain question answering:
+We establish comprehensive evaluation criteria specifically designed for multihop question answering systems:
 
-- **Domain Relevance Assessment**: Manual evaluation by medical domain experts
-- **Answer Quality**: Factual accuracy and domain appropriateness  
-- **Evidence Traceability**: Ability to link answers to authoritative domain sources
-- **Retrieval Efficiency**: Processing speed for real-time professional applications
-- **Cross-Domain Robustness**: Performance across different medical specialties and query types
+- **Answer Correctness**: F1 and Exact Match metrics measuring answer quality
+- **Supporting Fact Identification**: Precision, recall, and F1 for evidence selection
+- **Reasoning Transparency**: Ability to trace reasoning chains across documents
+- **Citation Accuracy**: Correct identification of supporting passages
+- **Robustness**: Performance across different question types (bridge, comparison) and difficulty levels
 
 ---
 
-## 🎯 Research Contributions
+## Research Contributions
 
-This work advances the field of domain-specific question answering through:
+This work advances the field of multihop question answering through:
 
-1. **Domain QA Baseline Establishment**: Systematic evaluation of traditional IR methods on medical domain literature
-2. **Medical Domain Adaptation Techniques**: Specialized preprocessing and evaluation for medical literature
-3. **Method Comparison Framework**: Direct comparison of sparse vs. dense retrieval on domain-specific content
-4. **Transferable Methodology**: Focus on approaches applicable across medical specialties and expert domains
+1. **Comprehensive RAG Pipeline**: Complete implementation from retrieval through generation with fine-tuning
+2. **Multihop Evaluation Framework**: 6-metric assessment covering answer quality, citation accuracy, and reliability
+3. **Baseline Comparisons**: Systematic evaluation of traditional vs. fine-tuned approaches on HotpotQA
+4. **Practical Insights**: Real-world lessons from training QLoRA models for multihop reasoning
+5. **Reproducible Methodology**: Open implementation applicable to other multihop reasoning tasks
 
 ---
 
 ```{epigraph}
-"The intersection of artificial intelligence and domain expertise opens unprecedented frontiers for evidence-based professional decision-making, where sophisticated algorithms learn to navigate the vast and evolving landscape of specialized knowledge to support critical reasoning in expert contexts."
+"The ability to reason across multiple documents represents a fundamental leap toward human-like information synthesis. Systems that can connect disparate facts, trace reasoning chains, and admit uncertainty are not merely answering questions—they are demonstrating genuine understanding of how knowledge interconnects."
 
--- *The Future of AI-Driven Domain Information Systems*
+-- *The Evolution of AI Question Answering Systems*
 ```
 
 ```{seealso}
-Ready to explore our comprehensive domain QA implementation? Navigate through our analysis pipeline:
-- 📊 **Dataset Analysis** - Deep dive into COVID-QA characteristics as medical domain case study  
-- 📖 **Traditional Methods** - TF-IDF and BM25 baseline implementations with domain optimization
-- 🧠 **Dense Retrieval** - DPR and SPLADE advanced approaches with medical domain adaptation
-- 📈 **Evaluation Framework** - Comprehensive domain QA assessment metrics and expert validation
-- 🔬 **Results Analysis** - Performance comparison and method selection guidance for medical domain applications
+Ready to explore our comprehensive multihop QA implementation? Navigate through our analysis pipeline:
+- **Dataset Analysis** - Deep dive into HotpotQA characteristics for multihop reasoning
+- **Traditional Methods** - BM25 baseline implementations with retrieval optimization
+- **Dense Retrieval** - DPR and reranking approaches for multihop evidence gathering
+- **Evaluation Framework** - Comprehensive QA assessment metrics including Answer F1 and EM
+- **Results Analysis** - Performance comparison and method selection guidance for RAG applications
 ```

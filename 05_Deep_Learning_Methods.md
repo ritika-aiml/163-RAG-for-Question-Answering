@@ -1,5 +1,12 @@
 # Deep Learning RAG Pipeline Training Plan for HotpotQA
 
+:::{iframe} https://www.youtube.com/embed/t509sv5MT0w
+:width: 100%
+:align: center
+
+QLoRA Explained - Parameter-efficient fine-tuning with quantized low-rank adaptation
+:::
+
 ## 1. Goals & Scope
 
 **Primary Goal**: Maximize HotpotQA Answer EM/F1 while maintaining high faithfulness (answers supported by cited passages).
@@ -112,6 +119,13 @@ eval_steps: 100                 # Regular evaluation
 ```
 
 ## 6. Weights & Biases Integration
+
+:::{iframe} https://www.youtube.com/embed/cWJG5J8JkT4
+:width: 100%
+:align: center
+
+Weights & Biases Tutorial - Experiment tracking and model management for machine learning
+:::
 
 ### Checkpoint Management
 - **Adapter-only saves**: Never upload full base model (>13GB)

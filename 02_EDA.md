@@ -1,5 +1,15 @@
 # Data Description
 
+```{tableofcontents}
+```
+
+:::{iframe} https://www.youtube.com/embed/xi0vhXFPegw
+:width: 100%
+:align: center
+
+Exploratory Data Analysis Techniques - Understanding dataset characteristics through systematic analysis
+:::
+
 ## Dataset Overview
 
 For this multi-hop reasoning question answering project, we focus on the **HotpotQA dataset**, a large-scale dataset specifically designed for multi-hop reasoning over text. This dataset was selected because it directly addresses the core challenge of our project: answering questions that require synthesizing information from multiple sources rather than extracting answers from single passages.
@@ -85,14 +95,14 @@ Your model must:
 - Find supporting sentences
 - Generate the correct answer
 
-👀 **Use case**: Evaluates both retrieval and reasoning capabilities in a controlled environment
+**Use case**: Evaluates both retrieval and reasoning capabilities in a controlled environment
 
 #### 2. Full Wiki Setting (Open Domain QA)
 This setting does not give you the paragraphs — instead, you must:
 - **Retrieve paragraphs yourself from the full Wikipedia dump**
 - **Then reason across them**
 
-👀 **Use case**: End-to-end QA pipeline (retrieval + reasoning) testing complete system performance
+**Use case**: End-to-end QA pipeline (retrieval + reasoning) testing complete system performance
 
 ### Evaluation Metrics
 
